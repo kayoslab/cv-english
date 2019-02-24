@@ -145,20 +145,24 @@
 %%%%%%%%%%%%%%%%%%%%
 
 \setlength{\tabcolsep}{0pt}
-\newenvironment{entrylist}{%
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ll}
-}{%
-  \end{tabular*}
-}
-\renewcommand{\bfseries}{\headingfont\color{headercolor}}
-\newcommand{\entry}[4]{%
-  #1&\parbox[t]{11.8cm}{%
-    \textbf{#2}%
-    \hfill%
-    {\footnotesize\addfontfeature{Color=lightgray} #3}\\%
-    #4\vspace{\parsep}%
-  }\\}
+\usepackage{enumitem}
 
+\newenvironment{entrylist}{%
+	\begin{itemize} [leftmargin=0.8in] %[leftmargin=*,align=left,itemindent=-\dimexpr\labelwidth+\labelindent+\labelsep\relax] 
+	}{%
+	\end{itemize}
+}
+
+\renewcommand{\bfseries}{\headingfont\color{headercolor}}
+
+\newcommand{\entry}[4]{
+	\item[#1] \textbf{#2}  \hfill {\footnotesize \addfontfeature{Color=lightgray} #3} \\
+	#4 \vspace{\parsep} 
+}
+
+\newcommand{\smallentry}[2]{
+	\item[#1] \textbf{#2} \\ 
+}
 
 %%%%%%%%%%%%%%
 % Side block %
@@ -291,25 +295,33 @@
   \par\vspace{0.3\baselineskip}
 }
 
-\DeclareNameFormat{author}{%
-  \small\addfontfeature{Color=lightgray}%
-  \ifblank{#3}{}{#3\space}#1%
-  \ifthenelse{\value{listcount}<\value{liststop}}
-    {\addcomma\space}
-    {}%
-}
+%\DeclareNameFormat{author}{%
+%  \small\addfontfeature{Color=lightgray}%
+%  \ifblank{#3}{}{#3\space}#1%
+%  \ifthenelse{\value{listcount}<\value{liststop}}
+%    {\addcomma\space}
+%    {}%
+%}
+
+\newcommand{\printbibsection}[2]{%
+	\begin{refsection}%
+		\newrefcontext[sorting=chronological]%
+		\nocite{*}%
+		\printbibliography[type={#1}, title={#2}, heading=subbibliography]%
+\end{refsection}}
+
 
 \defbibheading{bibheading}[\bibname]{%
    \subsubsection*{#1}
    \markboth{#1}{#1}
 }
 
-\newcommand{\printbibsection}[2]{
-  \begin{refsection}
-    \nocite{*}
-    \printbibliography[sorting=chronological, type={#1}, title={#2}, heading=bibheading]
-  \end{refsection}
-}
+%\newcommand{\printbibsection}[2]{
+%  \begin{refsection}
+%    \nocite{*}
+%    \printbibliography[sorting=chronological, type={#1}, title={#2}, heading=bibheading]
+%  \end{refsection}
+%}
 
 \DeclareSortingScheme{chronological}{
   \sort[direction=descending]{\field{year}}

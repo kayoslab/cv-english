@@ -1,5 +1,6 @@
 # About
 English Version of my CV for general applications.
+Please find the PDF export [here](CV.pdf).
 
 # Origin
 https://www.latextemplates.com/template/friggeri-resume-cv
